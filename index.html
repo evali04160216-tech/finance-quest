@@ -530,11 +530,50 @@ function pullFromSheets(){
   document.head.appendChild(script);
 }
 
+// [v2.2 FIX] pushToSheets 改用 form-urlencoded（CORS simple request 可拿到回應）
 function pushToSheets(){
   setSyncStatus('loading','推送到 Sheets...');
-  fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'sync',data:records,budgets:budgets}),headers:{'Content-Type':'text/plain'},mode:'no-cors'})
-    .then(()=>{const now=new Date();const ts=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');setSyncStatus('ok','✓ 已推送 '+ts);showSyncMsg('✓ 資料已推送到 Google Sheets！');})
-    .catch((err)=>{setSyncStatus('error','推送失敗');showSyncMsg('推送失敗：'+err.message);console.error('[Sync Push]',err);});
+  
+  // 把整個 payload 包成 JSON 字串，當成 form 欄位送
+  const payload = JSON.stringify({
+    action: 'sync',
+    data: records,
+    budgets: budgets
+  });
+  
+  const formData = new URLSearchParams();
+  formData.append('payload', payload);
+  
+  console.log('[Sync Push] 發起推送，筆數:', records.length);
+  
+  fetch(GS_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: formData.toString()
+  })
+  .then(res => {
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  })
+  .then(data => {
+    console.log('[Sync Push] 收到回應:', data);
+    if(data && data.status === 'ok'){
+      const now = new Date();
+      const ts = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+      setSyncStatus('ok', '✓ 已推送 ' + data.count + ' 筆 ' + ts);
+      showSyncMsg('✓ 已推送 ' + data.count + ' 筆到雲端！其他裝置點「⬇ 載入」即可同步');
+    } else {
+      const errMsg = (data && data.message) ? data.message : '未知錯誤';
+      setSyncStatus('error', '推送失敗：' + errMsg);
+      showSyncMsg('推送失敗：' + errMsg);
+      console.error('[Sync Push] 後端錯誤:', data);
+    }
+  })
+  .catch(err => {
+    setSyncStatus('error', '推送失敗：' + err.message);
+    showSyncMsg('推送失敗：' + err.message + '（請確認 GAS v2.2 已部署）');
+    console.error('[Sync Push] 連線錯誤:', err);
+  });
 }
 
 function showSyncMsg(text){
