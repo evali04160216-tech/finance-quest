@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- [v2.1 FIX] 新版 mobile-web-app-capable 取代舊版 apple-mobile-web-app-capable 警告 -->
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0F0823">
+<!-- [v2.1 FIX] inline favicon 消除 favicon.ico 404 紅字 -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <title>⚔️ 財務冒險者</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -447,7 +451,9 @@ function updateParentPanel(){
 function chgChildPin(){const np=document.getElementById('new-child-pin').value;const msg=document.getElementById('pin-msg');if(!/^\d{4}$/.test(np)){msg.style.color='var(--red)';msg.textContent='需4位數字';return;}if(np===parentPin){msg.style.color='var(--red)';msg.textContent='不能與家長PIN相同';return;}childPin=np;save();msg.style.color='var(--teal)';msg.textContent='✓ 女兒 PIN 已更新';document.getElementById('new-child-pin').value='';}
 function chgParentPin(){const np=document.getElementById('new-parent-pin').value;const msg=document.getElementById('pin-msg');if(!/^\d{4}$/.test(np)){msg.style.color='var(--red)';msg.textContent='需4位數字';return;}if(np===childPin){msg.style.color='var(--red)';msg.textContent='不能與女兒PIN相同';return;}parentPin=np;save();msg.style.color='var(--teal)';msg.textContent='✓ 家長 PIN 已更新';document.getElementById('new-parent-pin').value='';}
 
-// 雙向同步
+// ============================================================
+// 雙向同步 v2.1（強化錯誤訊息 + 修「網路錯誤」殘留 bug）
+// ============================================================
 function setSyncStatus(status, text){
   const dot=document.getElementById('sync-dot');
   const qs=document.getElementById('qs-btn');
@@ -456,35 +462,71 @@ function setSyncStatus(status, text){
   else{dot.className='sync-dot off';qs.disabled=false;document.getElementById('sync-time').textContent=text||'同步失敗';}
 }
 
+// [v2.1 FIX] pullFromSheets 完全重寫：強化錯誤訊息 + 防止殘留錯誤橫幅
 function pullFromSheets(){
   setSyncStatus('loading','從 Sheets 載入中...');
+  
   const cbName='fqCallback'+Date.now();
   const script=document.createElement('script');
-  script.src=GS_URL+'?action=get&callback='+cbName;
+  let timeoutId=null;
+  let finished=false;
+  
+  // 統一清理函式
+  const cleanup=()=>{
+    if(finished)return;
+    finished=true;
+    if(timeoutId)clearTimeout(timeoutId);
+    try{if(script.parentNode)script.parentNode.removeChild(script);}catch(e){}
+    try{delete window[cbName];}catch(e){}
+  };
+  
+  // 成功 callback
   window[cbName]=function(data){
-    document.head.removeChild(script);
-    delete window[cbName];
-    if(data.status==='ok'){
-      if(data.records&&data.records.length>0){
+    cleanup();
+    console.log('[Sync] 收到回應:',data);
+    
+    if(data && data.status==='ok'){
+      if(data.records && data.records.length>0){
         records=data.records;
-        if(data.budgets&&Object.keys(data.budgets).length>0)budgets=data.budgets;
+        if(data.budgets && Object.keys(data.budgets).length>0)budgets=data.budgets;
         save();
         updateOverview();renderList();renderBudgets();updateXP();renderQuests();
         if(currentRole==='parent')updateParentPanel();
       }
-      const now=new Date();const ts=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
-      setSyncStatus('ok','✓ 已載入雲端資料 '+ts);
-      showSyncMsg('✓ 雲端資料已同步到此裝置！');
+      const now=new Date();
+      const ts=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
+      const cnt=data.records?data.records.length:0;
+      setSyncStatus('ok','✓ 已載入 '+cnt+' 筆 '+ts);
+      showSyncMsg('✓ 雲端資料已同步！共 '+cnt+' 筆記錄');
     } else {
-      setSyncStatus('error','載入失敗');
-      showSyncMsg('載入失敗，請重試');
+      const errMsg=(data && data.message)?data.message:'資料格式錯誤';
+      setSyncStatus('error','載入失敗：'+errMsg);
+      showSyncMsg('載入失敗：'+errMsg);
+      console.error('[Sync] 後端錯誤:',data);
     }
   };
+  
+  // 失敗 callback（最常見：GAS 沒部署/權限問題/CORS）
   script.onerror=function(){
-    document.head.removeChild(script);delete window[cbName];
-    setSyncStatus('error','網路錯誤，請重試');
+    cleanup();
+    setSyncStatus('error','GAS 連線失敗，請檢查部署設定');
+    showSyncMsg('連線失敗！請確認：①GAS 已重新部署 ②權限「任何人」 ③ 用瀏覽器直接打開 GAS 網址測試');
+    console.error('[Sync] script.onerror 觸發，GAS URL 可能無法存取');
   };
-  setTimeout(()=>{if(window[cbName]){document.head.removeChild(script);delete window[cbName];setSyncStatus('error','逾時，請重試');}},10000);
+  
+  // 10 秒逾時
+  timeoutId=setTimeout(function(){
+    if(!finished){
+      cleanup();
+      setSyncStatus('error','逾時（10秒），請重試');
+      showSyncMsg('GAS 回應逾時，可能：①網路慢 ②GAS 執行中錯誤');
+      console.error('[Sync] 10 秒逾時');
+    }
+  },10000);
+  
+  // 啟動 JSONP 請求
+  script.src=GS_URL+'?action=get&callback='+cbName+'&t='+Date.now();
+  console.log('[Sync] 發起請求:',script.src);
   document.head.appendChild(script);
 }
 
@@ -492,12 +534,12 @@ function pushToSheets(){
   setSyncStatus('loading','推送到 Sheets...');
   fetch(GS_URL,{method:'POST',body:JSON.stringify({action:'sync',data:records,budgets:budgets}),headers:{'Content-Type':'text/plain'},mode:'no-cors'})
     .then(()=>{const now=new Date();const ts=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');setSyncStatus('ok','✓ 已推送 '+ts);showSyncMsg('✓ 資料已推送到 Google Sheets！');})
-    .catch(()=>{setSyncStatus('error','推送失敗');showSyncMsg('推送失敗，請重試');});
+    .catch((err)=>{setSyncStatus('error','推送失敗');showSyncMsg('推送失敗：'+err.message);console.error('[Sync Push]',err);});
 }
 
 function showSyncMsg(text){
   ['sync-msg2','parent-sync-msg'].forEach(id=>{const e=document.getElementById(id);if(e){e.textContent=text;}});
-  setTimeout(()=>['sync-msg2','parent-sync-msg'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='';}),3000);
+  setTimeout(()=>['sync-msg2','parent-sync-msg'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='';}),5000);
 }
 
 function exportCSV(){const rows=records.map(r=>`${r.date},${r.type==='income'?'收入':'支出'},${r.cat},${r.desc},${r.amount}`);const blob=new Blob(['\ufeff日期,類型,分類,說明,金額\n'+rows.join('\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='財務冒險者.csv';a.click();}
