@@ -3,359 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🏠 家庭學習金</title>
+<title>🏠 家庭學習金 2.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Noto+Serif+TC:wght@400;600;700;900&family=DotGothic16&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-/* ===================== 設計變數 ===================== */
 :root{
-  --ink:#2b1d12;
-  --paper:#f5e8c7;
-  --paper-2:#ead7a3;
-  --gold:#c9a14a;
-  --gold-deep:#8a6a23;
-  --red-seal:#a8332b;
-  --green:#5a8a3a;
-  --teal:#3e7c8a;
-  --pink:#d97a8c;
+  --ink:#2b1d12;--paper:#f5e8c7;--paper-2:#ead7a3;
+  --gold:#c9a14a;--gold-deep:#8a6a23;
+  --red:#a8332b;--green:#5a8a3a;--teal:#3e7c8a;--pink:#d97a8c;--purple:#7C3AED;
   --shadow:rgba(43,29,18,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{
-  font-family:'Noto Serif TC',serif;
-  color:var(--ink);
+  font-family:'Noto Serif TC',serif;color:var(--ink);
   background:
     radial-gradient(ellipse at top left, #f7ecc8 0%, transparent 60%),
     radial-gradient(ellipse at bottom right, #e8d4a0 0%, transparent 60%),
-    repeating-linear-gradient(45deg, transparent 0 20px, rgba(138,106,35,.04) 20px 21px),
     var(--paper);
-  min-height:100vh;
-  overflow-x:hidden;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;
-  background:
-    radial-gradient(circle at 20% 30%, transparent 0%, rgba(138,106,35,.08) 100%),
-    radial-gradient(circle at 80% 70%, transparent 0%, rgba(168,51,43,.04) 100%);
-  z-index:0;
+  min-height:100vh;overflow-x:hidden;
 }
 .app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:20px 16px 100px}
 
-.font-display{font-family:'Cherry Bomb One',cursive;letter-spacing:.02em}
+/* === Header === */
+.header{text-align:center;padding:16px 0 14px;position:relative}
+.header h1{font-family:'Cherry Bomb One',cursive;font-size:30px;color:var(--ink);text-shadow:2px 2px 0 var(--gold);margin-bottom:2px}
+.header .sub{font-size:11px;color:var(--gold-deep);letter-spacing:.3em;font-weight:600}
+.header::after{content:"";display:block;width:50px;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:10px auto 0}
 
-/* ===================== 頂端 ===================== */
-.header{text-align:center;padding:20px 0 16px;position:relative}
-.header h1{
-  font-family:'Cherry Bomb One',cursive;
-  font-size:32px;color:var(--ink);
-  text-shadow:2px 2px 0 var(--gold);
-  margin-bottom:4px;
-}
-.header .sub{
-  font-size:12px;color:var(--gold-deep);letter-spacing:.3em;
-  text-transform:uppercase;font-weight:600;
-}
-.header::after{
-  content:"";display:block;width:60px;height:3px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  margin:12px auto 0;
-}
-
-/* ===================== 登入畫面 ===================== */
-.login-screen{
-  display:flex;flex-direction:column;align-items:center;
-  min-height:60vh;padding-top:20px;
-}
-.login-title{
-  font-family:'Cherry Bomb One',cursive;
-  font-size:24px;margin-bottom:8px;
-}
-.login-sub{font-size:13px;color:var(--gold-deep);margin-bottom:32px}
-
-.avatar-list{
-  display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;
-}
+/* === 登入 === */
+.login-screen{display:flex;flex-direction:column;align-items:center;min-height:50vh;padding-top:14px}
+.login-title{font-family:'Cherry Bomb One',cursive;font-size:22px;margin-bottom:6px}
+.login-sub{font-size:12px;color:var(--gold-deep);margin-bottom:24px}
+.avatar-list{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
 .avatar-card{
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  cursor:pointer;transition:transform .2s;
-  padding:12px;border-radius:18px;
-  background:linear-gradient(135deg, #fbf4dc 0%, #f0dfaf 100%);
-  border:2px solid var(--gold);
-  min-width:90px;
-  box-shadow:0 3px 0 var(--gold-deep);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;padding:12px;border-radius:18px;
+  background:linear-gradient(135deg,#fbf4dc 0%,#f0dfaf 100%);
+  border:2px solid var(--gold);min-width:84px;
+  box-shadow:0 3px 0 var(--gold-deep);transition:transform .15s;
 }
 .avatar-card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--gold-deep)}
-.avatar-card.selected{
-  background:var(--ink);color:var(--paper);
-  border-color:var(--ink);
-}
-.avatar-emoji{font-size:48px;line-height:1}
-.avatar-name{font-size:14px;font-weight:600}
-.avatar-role{font-size:11px;color:var(--gold-deep)}
-.avatar-card.selected .avatar-role{color:var(--gold)}
+.avatar-emoji{font-size:42px;line-height:1}
+.avatar-name{font-size:13px;font-weight:600}
+.avatar-role{font-size:10px;color:var(--gold-deep)}
 
-/* PIN 鍵盤 */
-.pin-display{
-  display:flex;gap:8px;justify-content:center;margin:16px 0 20px;
-}
-.pin-dot{
-  width:18px;height:18px;border-radius:50%;
-  border:2px solid var(--ink);background:transparent;
-}
+/* PIN */
+.pin-display{display:flex;gap:8px;justify-content:center;margin:14px 0 18px}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--ink);background:transparent}
 .pin-dot.filled{background:var(--ink)}
-
-.pin-keypad{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-  max-width:260px;margin:0 auto;
-}
-.pin-key{
-  background:var(--paper);border:2px solid var(--ink);
-  border-radius:14px;padding:16px;font-size:22px;
-  font-family:'Cherry Bomb One',cursive;color:var(--ink);
-  cursor:pointer;
-  box-shadow:0 3px 0 var(--ink);
-  transition:all .1s;
-}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:240px;margin:0 auto}
+.pin-key{background:var(--paper);border:2px solid var(--ink);border-radius:12px;padding:14px;font-size:20px;font-family:'Cherry Bomb One',cursive;color:var(--ink);cursor:pointer;box-shadow:0 3px 0 var(--ink)}
 .pin-key:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-.pin-key.back{background:var(--red-seal);color:white;border-color:var(--red-seal);box-shadow:0 3px 0 #6e1f1a;font-size:14px}
-.pin-key.cancel{background:transparent;color:var(--gold-deep);border-color:transparent;box-shadow:none;font-size:14px}
+.pin-key.back{background:var(--red);color:white;border-color:var(--red);font-size:12px;box-shadow:0 3px 0 #6e1f1a}
+.pin-key.cancel{background:transparent;border-color:transparent;color:var(--gold-deep);font-size:12px;box-shadow:none}
 
-/* ===================== 身份徽章 ===================== */
-.user-greeting{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:16px;font-size:14px;
-}
-.user-info{display:flex;align-items:center;gap:8px;color:var(--gold-deep)}
-.user-info strong{color:var(--ink);font-size:16px}
-.user-info .avatar-small{font-size:24px}
-.role-badge{
-  display:inline-flex;align-items:center;gap:4px;
-  background:var(--ink);color:var(--paper);
-  padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;
-}
+/* === 使用者列 === */
+.user-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px}
+.user-info{display:flex;align-items:center;gap:6px;color:var(--gold-deep)}
+.user-info .av{font-size:22px}
+.user-info strong{color:var(--ink);font-size:15px}
+.role-badge{display:inline-flex;background:var(--ink);color:var(--paper);padding:2px 10px;border-radius:20px;font-size:10px;font-weight:600}
 .role-badge.parent{background:var(--teal)}
 .role-badge.child{background:var(--pink)}
-.btn-logout{
-  background:transparent;border:1px solid var(--gold-deep);
-  color:var(--gold-deep);padding:4px 10px;border-radius:14px;
-  font-size:11px;cursor:pointer;
-}
+.btn-logout{background:transparent;border:1px solid var(--gold-deep);color:var(--gold-deep);padding:3px 10px;border-radius:14px;font-size:11px;cursor:pointer}
 
-/* ===================== Tab 切換 ===================== */
-.tabs{
-  display:flex;gap:4px;margin-bottom:20px;
-  background:rgba(43,29,18,.06);padding:4px;border-radius:14px;
-  overflow-x:auto;
-}
-.tab{
-  flex:1;min-width:60px;
-  padding:8px 4px;text-align:center;
-  border:none;background:transparent;cursor:pointer;
-  font-family:'Noto Serif TC',serif;font-size:12px;font-weight:600;
-  color:var(--gold-deep);
-  border-radius:10px;
-  transition:all .2s;
-}
-.tab.active{
-  background:var(--ink);color:var(--paper);
-  box-shadow:0 2px 8px var(--shadow);
-}
-.tab .ico{display:block;font-size:18px;margin-bottom:2px}
+/* === Tabs === */
+.tabs{display:flex;gap:3px;margin-bottom:16px;background:rgba(43,29,18,.06);padding:3px;border-radius:14px;overflow-x:auto}
+.tab{flex:1;min-width:54px;padding:7px 3px;text-align:center;border:none;background:transparent;cursor:pointer;font-family:'Noto Serif TC',serif;font-size:11px;font-weight:600;color:var(--gold-deep);border-radius:10px}
+.tab.active{background:var(--ink);color:var(--paper);box-shadow:0 2px 8px var(--shadow)}
+.tab .ico{display:block;font-size:17px;margin-bottom:1px}
 
-/* ===================== 卡片 ===================== */
-.card{
-  background:linear-gradient(135deg, #fbf4dc 0%, #f0dfaf 100%);
-  border:1px solid var(--gold);
-  border-radius:18px;
-  padding:20px;margin-bottom:16px;
-  box-shadow:0 2px 0 var(--gold-deep),0 6px 16px var(--shadow);
-}
-.card-title{
-  font-family:'Cherry Bomb One',cursive;
-  font-size:18px;color:var(--ink);
-  margin-bottom:14px;display:flex;align-items:center;gap:8px;
-}
+/* === Card === */
+.card{background:linear-gradient(135deg,#fbf4dc 0%,#f0dfaf 100%);border:1px solid var(--gold);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 0 var(--gold-deep),0 4px 12px var(--shadow)}
+.card-title{font-family:'Cherry Bomb One',cursive;font-size:16px;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:6px}
 
-/* ===================== 三罐 ===================== */
-.jars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.jar{
-  background:var(--paper);border:2px solid var(--ink);border-radius:14px;
-  padding:14px 8px;text-align:center;position:relative;overflow:hidden;
-}
-.jar .icon{font-size:36px;line-height:1;margin-bottom:4px;display:block}
-.jar .label{font-size:11px;color:var(--gold-deep);font-weight:600;letter-spacing:.1em}
-.jar .amount{
-  font-family:'Cherry Bomb One',cursive;
-  font-size:22px;color:var(--ink);margin-top:4px;
-}
+/* === XP 條（女兒專屬）=== */
+.xp-card{background:linear-gradient(135deg,#1a0d3e 0%,#3a1d5e 100%);color:#fde68a;border:none;border-radius:16px;padding:16px;margin-bottom:12px}
+.xp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.xp-level{font-family:'Cherry Bomb One',cursive;font-size:24px;color:#fde68a}
+.xp-num{font-size:12px;opacity:.8}
+.xp-bar{height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.xp-fill{height:100%;background:linear-gradient(90deg,#fde68a,#fbbf24);transition:width .5s}
+.xp-tasks{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.xp-task{display:flex;justify-content:space-between;align-items:center;font-size:12px;background:rgba(255,255,255,.08);padding:8px 10px;border-radius:8px}
+.xp-task.done{opacity:.5}
+.xp-task .reward{color:#fde68a;font-weight:600;font-size:11px}
+
+/* === 三罐 === */
+.jars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.jar{background:var(--paper);border:2px solid var(--ink);border-radius:12px;padding:12px 6px;text-align:center}
+.jar .icon{font-size:32px;line-height:1;display:block;margin-bottom:2px}
+.jar .label{font-size:10px;color:var(--gold-deep);font-weight:600}
+.jar .amount{font-family:'Cherry Bomb One',cursive;font-size:18px;color:var(--ink);margin-top:2px}
 .jar.consume{background:linear-gradient(180deg,#fde2e7 50%,#fbc4cc 50%)}
 .jar.goal{background:linear-gradient(180deg,#fef3c7 50%,#fde68a 50%)}
 .jar.share{background:linear-gradient(180deg,#dcfce7 50%,#bbf7d0 50%)}
 
-.balance-total{
-  text-align:center;padding:14px;
-  background:var(--ink);color:var(--paper);
-  border-radius:14px;margin-bottom:16px;
-  position:relative;overflow:hidden;
-}
-.balance-total::before{
-  content:"";position:absolute;inset:0;
-  background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(201,161,74,.1) 6px 7px);
-}
-.balance-total .label{font-size:12px;letter-spacing:.3em;color:var(--gold);position:relative}
-.balance-total .amount{
-  font-family:'Cherry Bomb One',cursive;
-  font-size:42px;color:var(--paper);position:relative;
-}
+.balance-total{text-align:center;padding:14px;background:var(--ink);color:var(--paper);border-radius:14px;margin-bottom:14px}
+.balance-total .label{font-size:11px;letter-spacing:.3em;color:var(--gold)}
+.balance-total .amount{font-family:'Cherry Bomb One',cursive;font-size:38px;color:var(--paper)}
 
-/* ===================== 按鈕 ===================== */
-.btn{
-  padding:10px 16px;border:none;border-radius:12px;cursor:pointer;
-  font-family:'Noto Serif TC',serif;font-weight:600;font-size:14px;
-  transition:all .15s;
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-}
+/* === 按鈕 === */
+.btn{padding:10px 14px;border:none;border-radius:11px;cursor:pointer;font-family:'Noto Serif TC',serif;font-weight:600;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:transform .1s}
 .btn-primary{background:var(--ink);color:var(--paper);box-shadow:0 3px 0 #0f0a06}
 .btn-primary:active{transform:translateY(2px);box-shadow:0 1px 0 #0f0a06}
 .btn-gold{background:var(--gold);color:var(--ink);box-shadow:0 3px 0 var(--gold-deep)}
 .btn-gold:active{transform:translateY(2px);box-shadow:0 1px 0 var(--gold-deep)}
-.btn-red{background:var(--red-seal);color:white;box-shadow:0 3px 0 #6e1f1a}
+.btn-red{background:var(--red);color:white;box-shadow:0 3px 0 #6e1f1a}
 .btn-green{background:var(--green);color:white;box-shadow:0 3px 0 #3d5e26}
-.btn-block{width:100%;padding:14px}
-.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn-block{width:100%;padding:13px;font-size:14px}
+.btn-row{display:flex;gap:6px;margin-top:10px}
 .btn-row .btn{flex:1}
 
-/* ===================== 列表 ===================== */
-.list{display:flex;flex-direction:column;gap:8px}
-.list-item{
-  background:rgba(255,255,255,.5);border:1px solid rgba(138,106,35,.2);
-  border-radius:10px;padding:10px 12px;
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:13px;
-}
+/* === 分類選擇 === */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.cat-item{background:var(--paper);border:1.5px solid var(--gold);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;font-size:11px;transition:all .15s}
+.cat-item:active{transform:scale(.95)}
+.cat-item.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.cat-item .ico{display:block;font-size:24px;line-height:1;margin-bottom:2px}
+
+/* === 列表 === */
+.list{display:flex;flex-direction:column;gap:6px}
+.list-item{background:rgba(255,255,255,.5);border:1px solid rgba(138,106,35,.2);border-radius:9px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
 .list-item .left{flex:1;min-width:0}
 .list-item .title{font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.list-item .meta{font-size:11px;color:var(--gold-deep);margin-top:2px}
-.list-item .amount{font-weight:700;white-space:nowrap;margin-left:8px}
+.list-item .meta{font-size:10px;color:var(--gold-deep);margin-top:1px}
+.list-item .amount{font-weight:700;white-space:nowrap;margin-left:6px;font-size:13px}
 .list-item .amount.income{color:var(--green)}
-.list-item .amount.expense{color:var(--red-seal)}
+.list-item .amount.expense{color:var(--red)}
+.empty{text-align:center;color:var(--gold-deep);padding:24px;font-size:12px}
 
-.empty{text-align:center;color:var(--gold-deep);padding:30px;font-size:13px}
+/* === 表單 === */
+.form-group{margin-bottom:10px}
+.form-group label{display:block;font-size:11px;color:var(--gold-deep);font-weight:600;margin-bottom:3px;letter-spacing:.1em}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 11px;border:1px solid var(--gold);background:rgba(255,255,255,.6);border-radius:9px;font-family:'Noto Serif TC',serif;font-size:13px;color:var(--ink)}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--ink);background:white}
 
-/* ===================== 表單 ===================== */
-.form-group{margin-bottom:12px}
-.form-group label{
-  display:block;font-size:12px;color:var(--gold-deep);
-  font-weight:600;margin-bottom:4px;letter-spacing:.1em;
-}
-.form-group input,.form-group select,.form-group textarea{
-  width:100%;padding:10px 12px;
-  border:1px solid var(--gold);background:rgba(255,255,255,.6);
-  border-radius:10px;font-family:'Noto Serif TC',serif;font-size:14px;
-  color:var(--ink);
-}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
-  outline:none;border-color:var(--ink);background:white;
-}
-
-/* ===================== Modal ===================== */
-.modal-mask{
-  position:fixed;inset:0;background:rgba(43,29,18,.5);
-  display:none;align-items:center;justify-content:center;
-  z-index:100;padding:20px;
-}
+/* === Modal === */
+.modal-mask{position:fixed;inset:0;background:rgba(43,29,18,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
 .modal-mask.show{display:flex}
-.modal{
-  background:var(--paper);border:2px solid var(--ink);
-  border-radius:18px;padding:24px;max-width:400px;width:100%;
-  max-height:90vh;overflow-y:auto;
-  box-shadow:0 8px 0 var(--ink),0 20px 40px rgba(0,0,0,.3);
-}
-.modal-title{
-  font-family:'Cherry Bomb One',cursive;
-  font-size:22px;text-align:center;margin-bottom:16px;
-}
+.modal{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:20px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 8px 0 var(--ink),0 16px 32px rgba(0,0,0,.3)}
+.modal-title{font-family:'Cherry Bomb One',cursive;font-size:20px;text-align:center;margin-bottom:14px}
 
-/* ===================== 狀態徽章 ===================== */
-.status{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+/* === 狀態 === */
+.status{display:inline-block;padding:2px 7px;border-radius:9px;font-size:10px;font-weight:600}
 .status-pending{background:#fef3c7;color:#92400e}
 .status-approved{background:#dcfce7;color:#166534}
 .status-rejected{background:#fee2e2;color:#991b1b}
 
-/* ===================== Toast ===================== */
-.toast{
-  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--ink);color:var(--paper);
-  padding:12px 24px;border-radius:24px;
-  font-size:14px;font-weight:600;
-  opacity:0;transition:all .3s;
-  z-index:200;pointer-events:none;
-  box-shadow:0 4px 12px rgba(0,0,0,.3);
-}
+/* === Toast === */
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:11px 22px;border-radius:22px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:200;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* === 月報 === */
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.report-stat{background:rgba(255,255,255,.5);border:1px solid var(--gold);border-radius:10px;padding:10px;text-align:center}
+.report-stat .label{font-size:10px;color:var(--gold-deep)}
+.report-stat .value{font-family:'Cherry Bomb One',cursive;font-size:19px;color:var(--ink)}
+
+/* === 升等動畫 === */
+.levelup-mask{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:300}
+.levelup-mask.show{display:flex}
+.levelup-box{background:linear-gradient(135deg,#fde68a,#f59e0b);padding:30px 40px;border-radius:20px;text-align:center;animation:levelup-pop .5s ease}
+@keyframes levelup-pop{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.levelup-box h2{font-family:'Cherry Bomb One',cursive;font-size:36px;color:#1a0d3e;margin-bottom:8px}
+.levelup-box p{font-size:14px;color:#1a0d3e}
 
 .hidden{display:none !important}
 
-/* ===================== 月報 ===================== */
-.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.report-stat{
-  background:rgba(255,255,255,.5);border:1px solid var(--gold);
-  border-radius:10px;padding:10px;text-align:center;
-}
-.report-stat .label{font-size:11px;color:var(--gold-deep)}
-.report-stat .value{font-family:'Cherry Bomb One',cursive;font-size:20px;color:var(--ink)}
-
-.loading-screen{
-  text-align:center;padding:60px 20px;color:var(--gold-deep);
-}
-.loading-screen .spinner{
-  display:inline-block;width:30px;height:30px;
-  border:3px solid var(--gold);border-top-color:transparent;
-  border-radius:50%;animation:spin 1s linear infinite;
-  margin-bottom:12px;
-}
+/* === 載入 === */
+.loading-screen{text-align:center;padding:50px 20px;color:var(--gold-deep)}
+.loading-screen .spinner{display:inline-block;width:28px;height:28px;border:3px solid var(--gold);border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:10px}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* === 待審核獎金（家長專屬橫幅）=== */
+.pending-banner{background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #f59e0b;border-radius:14px;padding:12px;margin-bottom:12px}
+.pending-banner .title{font-size:12px;color:#92400e;font-weight:700;margin-bottom:4px}
+.pending-banner .item{font-size:13px;color:#78350f;margin-bottom:6px}
 </style>
 </head>
 <body>
 
 <div class="app">
 
-  <!-- ===== 頂端 ===== -->
   <div class="header">
     <h1>🏠 家庭學習金</h1>
-    <div class="sub">FAMILY · LEARNING · QUEST</div>
+    <div class="sub">FAMILY · LEARNING · QUEST · 2.0</div>
   </div>
 
-  <!-- ===== 載入畫面 ===== -->
+  <!-- 登入 -->
   <div id="loadingScreen" class="loading-screen hidden">
     <div class="spinner"></div>
     <div>載入中...</div>
   </div>
 
-  <!-- ===== 登入畫面（選頭像）===== -->
   <div id="loginScreen" class="login-screen">
     <div class="login-title">📜 請選擇你是誰</div>
     <div class="login-sub">點頭像登入</div>
-    <div class="avatar-list" id="avatarList">
-      <!-- 動態載入 -->
-    </div>
+    <div class="avatar-list" id="avatarList"></div>
   </div>
 
-  <!-- ===== PIN 輸入畫面 ===== -->
   <div id="pinScreen" class="login-screen hidden">
     <div class="login-title" id="pinTitle">請輸入密碼</div>
-    <div class="login-sub" id="pinSubtitle">4 位數字密碼</div>
-
-    <div class="pin-display" id="pinDisplay">
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
-      <div class="pin-dot"></div>
+    <div class="login-sub">4 位數字密碼</div>
+    <div class="pin-display">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
     </div>
-
     <div class="pin-keypad">
       <button class="pin-key" onclick="pinPress('1')">1</button>
       <button class="pin-key" onclick="pinPress('2')">2</button>
@@ -372,102 +226,147 @@ body::before{
     </div>
   </div>
 
-  <!-- ===== 主畫面 ===== -->
+  <!-- 主畫面 -->
   <div id="mainScreen" class="hidden">
-
-    <div class="user-greeting">
+    <div class="user-bar">
       <div class="user-info">
-        <span class="avatar-small" id="userAvatar">👤</span>
+        <span class="av" id="userAvatar">👤</span>
         <strong id="userName">--</strong>
         <span id="userBadge" class="role-badge">--</span>
       </div>
       <button class="btn-logout" onclick="logout()">登出</button>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs" id="tabsBar">
       <button class="tab active" data-tab="home"><span class="ico">🏠</span>主頁</button>
-      <button class="tab" data-tab="ledger"><span class="ico">📒</span>帳本</button>
+      <button class="tab" data-tab="record"><span class="ico">✏️</span>記帳</button>
+      <button class="tab" data-tab="ledger"><span class="ico">📒</span>明細</button>
       <button class="tab" data-tab="bonus"><span class="ico">🏆</span>獎金</button>
       <button class="tab" data-tab="course"><span class="ico">📚</span>課程</button>
       <button class="tab" data-tab="report"><span class="ico">📊</span>月報</button>
       <button class="tab" data-tab="setting"><span class="ico">⚙️</span>設定</button>
     </div>
 
-    <!-- ===== Tab: 主頁 ===== -->
+    <!-- Home -->
     <div id="tab-home" class="tab-content">
+      <!-- 女兒專屬 XP 卡 -->
+      <div id="xpCard" class="xp-card child-only">
+        <div class="xp-header">
+          <div>
+            <div class="xp-level" id="xpLevel">Lv.1 新手</div>
+            <div class="xp-num"><span id="xpCurrent">0</span> / <span id="xpNext">200</span> XP</div>
+          </div>
+          <div style="font-size:32px">⚔️</div>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+        <div class="xp-tasks" id="xpTasks"></div>
+      </div>
+
+      <!-- 待審核家長橫幅 -->
+      <div id="pendingBanner" class="pending-banner parent-only" style="display:none">
+        <div class="title">⚠️ 待審核獎金</div>
+        <div id="pendingItems"></div>
+      </div>
+
       <div class="balance-total">
         <div class="label">TOTAL</div>
         <div class="amount" id="totalBalance">$0</div>
       </div>
 
       <div class="jars">
-        <div class="jar consume">
-          <span class="icon">🐷</span>
-          <div class="label">消費</div>
-          <div class="amount" id="jarConsume">$0</div>
-        </div>
-        <div class="jar goal">
-          <span class="icon">🎯</span>
-          <div class="label">目標</div>
-          <div class="amount" id="jarGoal">$0</div>
-        </div>
-        <div class="jar share">
-          <span class="icon">❤️</span>
-          <div class="label">分享</div>
-          <div class="amount" id="jarShare">$0</div>
-        </div>
+        <div class="jar consume"><span class="icon">🐷</span><div class="label">消費</div><div class="amount" id="jarConsume">$0</div></div>
+        <div class="jar goal"><span class="icon">🎯</span><div class="label">目標</div><div class="amount" id="jarGoal">$0</div></div>
+        <div class="jar share"><span class="icon">❤️</span><div class="label">分享</div><div class="amount" id="jarShare">$0</div></div>
       </div>
 
       <div class="card">
         <div class="card-title">📋 最近紀錄</div>
-        <div id="recentList" class="list">
-          <div class="empty">尚無紀錄</div>
-        </div>
+        <div id="recentList" class="list"><div class="empty">尚無紀錄</div></div>
       </div>
 
       <div class="card parent-only">
         <div class="card-title">⚡ 家長快捷</div>
-        <div class="btn-row">
-          <button class="btn btn-green" onclick="openModal('modalIncome')">+ 收入</button>
-          <button class="btn btn-red" onclick="openModal('modalExpense')">- 支出</button>
-        </div>
-        <button class="btn btn-gold btn-block" style="margin-top:8px" onclick="doMonthlyCharge()">
-          💸 本月課程扣款
-        </button>
+        <button class="btn btn-gold btn-block" onclick="doMonthlyCharge()">💸 本月課程扣款</button>
       </div>
     </div>
 
-    <!-- ===== Tab: 帳本 ===== -->
+    <!-- 記帳 Tab -->
+    <div id="tab-record" class="tab-content hidden">
+      <div class="card">
+        <div class="card-title">✏️ 記一筆</div>
+
+        <div class="form-group">
+          <label>類型</label>
+          <div class="btn-row">
+            <button class="btn btn-green" id="typeIncome" onclick="setRecordType('income')">💰 收入</button>
+            <button class="btn btn-red" id="typeExpense" onclick="setRecordType('expense')">💸 支出</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>分類</label>
+          <div class="cat-grid" id="categoryGrid"></div>
+        </div>
+
+        <div class="form-group">
+          <label>金額</label>
+          <input type="number" id="recordAmount" placeholder="0" inputmode="numeric">
+        </div>
+
+        <div class="form-group">
+          <label>說明（選填）</label>
+          <input type="text" id="recordDesc" placeholder="例：早餐">
+        </div>
+
+        <div class="form-group parent-only">
+          <label>從哪罐扣（僅支出時）</label>
+          <select id="recordFrom">
+            <option value="consume">🐷 消費罐</option>
+            <option value="goal">🎯 目標罐</option>
+            <option value="share">❤️ 分享罐</option>
+          </select>
+        </div>
+
+        <button class="btn btn-gold btn-block" onclick="submitRecord()">✅ 新增記錄</button>
+      </div>
+
+      <div class="card parent-only">
+        <div class="card-title">🏷️ 管理分類</div>
+        <button class="btn btn-primary btn-block" onclick="openCategoryEditor()">➕ 新增分類</button>
+        <div id="categoryManageList" class="list" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- 明細 Tab -->
     <div id="tab-ledger" class="tab-content hidden">
       <div class="card">
-        <div class="card-title">📒 完整帳本</div>
+        <div class="card-title" id="ledgerTabTitle">📒 完整明細</div>
         <div id="ledgerList" class="list"></div>
       </div>
     </div>
 
-    <!-- ===== Tab: 獎金 ===== -->
+    <!-- 獎金 Tab -->
     <div id="tab-bonus" class="tab-content hidden">
       <div class="card child-only">
         <div class="card-title">🏆 申請獎金</div>
-        <button class="btn btn-gold btn-block" onclick="openModal('modalBonusApply')">
-          📝 我要申請獎金
-        </button>
+        <button class="btn btn-gold btn-block" onclick="openBonusApply()">📝 我要申請獎金</button>
       </div>
-
+      <div class="card parent-only">
+        <div class="card-title">🎖️ 獎金類型管理</div>
+        <button class="btn btn-gold btn-block" onclick="openBonusTypeEditor()">➕ 新增獎金類型</button>
+        <div id="bonusTypeList" class="list" style="margin-top:10px"></div>
+      </div>
       <div class="card">
         <div class="card-title">📋 申請紀錄</div>
         <div id="bonusList" class="list"></div>
       </div>
     </div>
 
-    <!-- ===== Tab: 課程 ===== -->
+    <!-- 課程 Tab -->
     <div id="tab-course" class="tab-content hidden">
       <div class="card parent-only">
         <div class="card-title">📚 課程管理</div>
-        <button class="btn btn-gold btn-block" onclick="openCourseEditor()">
-          ➕ 新增課程
-        </button>
+        <button class="btn btn-gold btn-block" onclick="openCourseEditor()">➕ 新增課程</button>
       </div>
       <div class="card">
         <div class="card-title">📋 課程清單</div>
@@ -475,7 +374,7 @@ body::before{
       </div>
     </div>
 
-    <!-- ===== Tab: 月報 ===== -->
+    <!-- 月報 Tab -->
     <div id="tab-report" class="tab-content hidden">
       <div class="card">
         <div class="card-title">📊 月度結算</div>
@@ -487,25 +386,15 @@ body::before{
       </div>
     </div>
 
-    <!-- ===== Tab: 設定 ===== -->
+    <!-- 設定 Tab -->
     <div id="tab-setting" class="tab-content hidden">
       <div class="card">
         <div class="card-title">🔐 修改密碼</div>
-        <div class="form-group">
-          <label>舊密碼（4 位數）</label>
-          <input type="password" id="oldPwd" maxlength="4" inputmode="numeric">
-        </div>
-        <div class="form-group">
-          <label>新密碼（4 位數）</label>
-          <input type="password" id="newPwd" maxlength="4" inputmode="numeric">
-        </div>
-        <div class="form-group">
-          <label>再次輸入新密碼</label>
-          <input type="password" id="confirmPwd" maxlength="4" inputmode="numeric">
-        </div>
+        <div class="form-group"><label>舊密碼</label><input type="password" id="oldPwd" maxlength="4" inputmode="numeric"></div>
+        <div class="form-group"><label>新密碼</label><input type="password" id="newPwd" maxlength="4" inputmode="numeric"></div>
+        <div class="form-group"><label>再次輸入</label><input type="password" id="confirmPwd" maxlength="4" inputmode="numeric"></div>
         <button class="btn btn-gold btn-block" onclick="changePassword()">儲存新密碼</button>
       </div>
-
       <div class="card parent-only">
         <div class="card-title">⚙️ 系統設定</div>
         <div id="settingList" class="list"></div>
@@ -513,131 +402,70 @@ body::before{
     </div>
 
   </div>
-
 </div>
 
-<!-- ===================== Modal: 收入 ===================== -->
-<div class="modal-mask" id="modalIncome">
-  <div class="modal">
-    <div class="modal-title">💰 新增收入</div>
-    <div class="form-group">
-      <label>項目</label>
-      <input type="text" id="incomeItem" placeholder="例：週零用金">
-    </div>
-    <div class="form-group">
-      <label>金額</label>
-      <input type="number" id="incomeAmount" placeholder="100">
-    </div>
-    <div class="form-group">
-      <label>備註（選填）</label>
-      <input type="text" id="incomeNote">
-    </div>
-    <p style="font-size:12px;color:var(--gold-deep);margin-bottom:12px">
-      ✨ 自動依比例分配到三罐（4:4:2）
-    </p>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="closeModal('modalIncome')">取消</button>
-      <button class="btn btn-green" onclick="submitIncome()">確認</button>
-    </div>
-  </div>
-</div>
+<!-- ===== Modals ===== -->
 
-<!-- ===================== Modal: 支出 ===================== -->
-<div class="modal-mask" id="modalExpense">
-  <div class="modal">
-    <div class="modal-title">💸 新增支出</div>
-    <div class="form-group">
-      <label>項目</label>
-      <input type="text" id="expenseItem">
-    </div>
-    <div class="form-group">
-      <label>金額</label>
-      <input type="number" id="expenseAmount">
-    </div>
-    <div class="form-group">
-      <label>從哪一罐扣？</label>
-      <select id="expenseFrom">
-        <option value="consume">🐷 消費罐</option>
-        <option value="goal">🎯 目標罐</option>
-        <option value="share">❤️ 分享罐</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>備註（選填）</label>
-      <input type="text" id="expenseNote">
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="closeModal('modalExpense')">取消</button>
-      <button class="btn btn-red" onclick="submitExpense()">確認</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===================== Modal: 申請獎金 ===================== -->
 <div class="modal-mask" id="modalBonusApply">
   <div class="modal">
     <div class="modal-title">🏆 獎金申請</div>
     <div class="form-group">
       <label>獎金類型</label>
-      <select id="bonusType" onchange="suggestBonusAmount()">
-        <option value="單科95分以上" data-amount="200">📘 單科 95 分以上（200元）</option>
-        <option value="全科平均90分以上" data-amount="500">📚 全科平均 90 分以上（500元）</option>
-        <option value="進步10分以上" data-amount="300">📈 進步 10 分以上（300元）</option>
-        <option value="老師嘉獎" data-amount="100">⭐ 老師嘉獎（100元）</option>
-        <option value="才藝檢定通過" data-amount="500">🎵 才藝檢定通過（500-1000元）</option>
-        <option value="比賽參加" data-amount="200">🎯 比賽參加（200元）</option>
-        <option value="比賽得獎" data-amount="500">🏆 比賽得獎（500-2000元）</option>
-        <option value="其他" data-amount="0">✨ 其他</option>
-      </select>
+      <select id="bonusType" onchange="suggestBonusAmount()"></select>
     </div>
-    <div class="form-group">
-      <label>事項說明</label>
-      <input type="text" id="bonusEvent" placeholder="例：數學期中考 96 分">
-    </div>
-    <div class="form-group">
-      <label>申請金額</label>
-      <input type="number" id="bonusAmount" placeholder="200">
-    </div>
-    <div class="form-group">
-      <label>證明連結（選填）</label>
-      <input type="text" id="bonusProof" placeholder="https://...">
-    </div>
+    <div class="form-group"><label>事項說明</label><input type="text" id="bonusEvent" placeholder="例：數學期中考 96 分"></div>
+    <div class="form-group"><label>申請金額</label><input type="number" id="bonusAmount" placeholder="200"></div>
+    <div class="form-group"><label>證明連結（選填）</label><input type="text" id="bonusProof"></div>
     <div class="btn-row">
       <button class="btn btn-primary" onclick="closeModal('modalBonusApply')">取消</button>
-      <button class="btn btn-gold" onclick="submitBonus()">遞交申請 📜</button>
+      <button class="btn btn-gold" onclick="submitBonus()">遞交 📜</button>
     </div>
   </div>
 </div>
 
-<!-- ===================== Modal: 課程編輯 ===================== -->
+<div class="modal-mask" id="modalBonusType">
+  <div class="modal">
+    <div class="modal-title" id="modalBonusTypeTitle">🎖️ 新增獎金類型</div>
+    <input type="hidden" id="btId">
+    <div class="form-group"><label>名稱</label><input type="text" id="btName"></div>
+    <div class="form-group"><label>圖示</label><input type="text" id="btIcon" maxlength="2"></div>
+    <div class="form-group"><label>建議金額</label><input type="number" id="btAmount"></div>
+    <div class="form-group"><label>排序</label><input type="number" id="btOrder" value="99"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="closeModal('modalBonusType')">取消</button>
+      <button class="btn btn-red" id="btnDeleteBT" onclick="deleteBonusType()" style="display:none">刪除</button>
+      <button class="btn btn-gold" onclick="submitBonusType()">儲存</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-mask" id="modalCourse">
   <div class="modal">
     <div class="modal-title" id="modalCourseTitle">📚 新增課程</div>
     <input type="hidden" id="courseId">
-    <div class="form-group">
-      <label>課程名稱</label>
-      <input type="text" id="courseName">
-    </div>
+    <div class="form-group"><label>課程名稱</label><input type="text" id="courseName"></div>
     <div class="form-group">
       <label>分類</label>
-      <select id="courseCategory" onchange="autoFillCourseRatio()">
-        <option value="必修">🔴 必修（家長全付）</option>
-        <option value="半自付">🟡 半自付（家長70% / 女兒30%）</option>
-        <option value="全自付">🟢 全自付（女兒全付）</option>
+      <select id="courseCategory">
+        <option value="必修">🔴 必修</option>
+        <option value="半自付">🟡 半自付</option>
+        <option value="全自付">🟢 全自付</option>
+        <option value="其他">⚪ 其他</option>
       </select>
     </div>
-    <div class="form-group">
-      <label>月費</label>
-      <input type="number" id="courseFee" placeholder="1000">
+    <div class="form-group"><label>月費</label><input type="number" id="courseFee"></div>
+    <div style="background:rgba(201,161,74,.15);border-radius:10px;padding:8px;margin-bottom:10px">
+      <div style="font-size:10px;color:var(--gold-deep);font-weight:600;margin-bottom:5px">💡 快速套用</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+        <button class="btn btn-primary" style="padding:4px 8px;font-size:11px" onclick="applyRatio(1,0)">家長全付</button>
+        <button class="btn btn-primary" style="padding:4px 8px;font-size:11px" onclick="applyRatio(0.7,0.3)">7/3</button>
+        <button class="btn btn-primary" style="padding:4px 8px;font-size:11px" onclick="applyRatio(0.5,0.5)">5/5</button>
+        <button class="btn btn-primary" style="padding:4px 8px;font-size:11px" onclick="applyRatio(0,1)">女兒全付</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label>家長負擔比例（0~1）</label>
-      <input type="number" id="courseParentRatio" step="0.1" value="1">
-    </div>
-    <div class="form-group">
-      <label>女兒負擔比例（0~1）</label>
-      <input type="number" id="courseChildRatio" step="0.1" value="0">
-    </div>
+    <div class="form-group"><label>家長負擔比例</label><input type="number" id="courseParentRatio" step="0.01" value="1"></div>
+    <div class="form-group"><label>女兒負擔比例</label><input type="number" id="courseChildRatio" step="0.01" value="0"></div>
+    <div class="form-group"><label>備註</label><input type="text" id="courseNote"></div>
     <div class="btn-row">
       <button class="btn btn-primary" onclick="closeModal('modalCourse')">取消</button>
       <button class="btn btn-red" id="btnDeleteCourse" onclick="deleteCourse()" style="display:none">刪除</button>
@@ -646,44 +474,60 @@ body::before{
   </div>
 </div>
 
+<div class="modal-mask" id="modalCategory">
+  <div class="modal">
+    <div class="modal-title" id="modalCategoryTitle">🏷️ 新增分類</div>
+    <input type="hidden" id="catId">
+    <div class="form-group"><label>名稱</label><input type="text" id="catName"></div>
+    <div class="form-group">
+      <label>類型</label>
+      <select id="catType">
+        <option value="income">💰 收入</option>
+        <option value="expense">💸 支出</option>
+      </select>
+    </div>
+    <div class="form-group"><label>圖示</label><input type="text" id="catIcon" maxlength="2"></div>
+    <div class="form-group"><label>群組</label><input type="text" id="catGroup" placeholder="日常 / 學習 / 飲食"></div>
+    <div class="form-group"><label>排序</label><input type="number" id="catOrder" value="99"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="closeModal('modalCategory')">取消</button>
+      <button class="btn btn-red" id="btnDeleteCat" onclick="deleteCategory()" style="display:none">刪除</button>
+      <button class="btn btn-gold" onclick="submitCategory()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 升等動畫 -->
+<div class="levelup-mask" id="levelupMask" onclick="this.classList.remove('show')">
+  <div class="levelup-box">
+    <h2>🎉 LEVEL UP！</h2>
+    <p>恭喜升到 <span id="newLevel"></span> 級</p>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ========================================================
-// ⚙️ 設定區（部署後請修改 GAS_URL）
-// ========================================================
 const CONFIG = {
-  // 🔴 部署 GAS 後，將 Web App URL 貼到這裡
   GAS_URL: 'https://script.google.com/macros/s/AKfycbwbCRBfnHM_ZyxrP4Cq3n9PcPNycFZGKsokbgu16fXaxzGiQuHejcUwo3VF9sr_3Tq-PA/exec'
 };
 
 let state = {
-  accountId: null,
-  role: null,
-  name: null,
-  avatar: null,
-  nickname: null,
-  selectedMember: null,
-  pinInput: '',
-  members: []
+  accountId: null, role: null, name: null, avatar: null, nickname: null,
+  selectedMember: null, pinInput: '',
+  members: [], categories: [], bonusTypes: [],
+  recordType: 'expense', recordCategoryId: null, recordCategoryName: null, recordIcon: null,
+  lastLevel: null
 };
 
-// ========================================================
-// 🚀 啟動
-// ========================================================
+// ===== 啟動 =====
 async function init() {
-  // 檢查 localStorage 是否有登入
-  const saved = localStorage.getItem('familyMoney_session');
+  const saved = localStorage.getItem('flq_session');
   if (saved) {
     try {
       const s = JSON.parse(saved);
-      state.accountId = s.accountId;
-      state.role = s.role;
-      state.name = s.name;
-      state.avatar = s.avatar;
-      state.nickname = s.nickname;
-      showMain();
-      return;
+      Object.assign(state, s);
+      showMain(); return;
     } catch (e) {}
   }
   await loadMembers();
@@ -691,129 +535,86 @@ async function init() {
 
 async function loadMembers() {
   showLoading();
-  const res = await callApi('memberListPublic', {});
-  if (res.ok) {
-    state.members = res.data;
+  const r = await callApi('memberListPublic', {});
+  if (r.ok) {
+    state.members = r.data;
     renderAvatars();
     showLogin();
   } else {
-    showToast('載入失敗，請確認 GAS_URL 設定');
+    showToast('載入失敗');
     showLogin();
   }
 }
 
 function renderAvatars() {
-  const list = document.getElementById('avatarList');
-  list.innerHTML = state.members.map(m => `
-    <div class="avatar-card" onclick="selectMember('${m.accountId}')">
+  document.getElementById('avatarList').innerHTML = state.members.map(m =>
+    `<div class="avatar-card" onclick="selectMember('${m.accountId}')">
       <div class="avatar-emoji">${m.avatar || '👤'}</div>
       <div class="avatar-name">${m.nickname || m.name}</div>
       <div class="avatar-role">${m.role}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-function selectMember(accountId) {
-  state.selectedMember = state.members.find(m => m.accountId === accountId);
+function selectMember(id) {
+  state.selectedMember = state.members.find(m => m.accountId === id);
   state.pinInput = '';
   document.getElementById('pinTitle').textContent = state.selectedMember.avatar + ' ' + state.selectedMember.nickname;
-  document.getElementById('pinSubtitle').textContent = '請輸入 4 位數密碼';
   updatePinDots();
   showPinScreen();
 }
 
-function pinPress(digit) {
+function pinPress(d) {
   if (state.pinInput.length >= 4) return;
-  state.pinInput += digit;
+  state.pinInput += d;
   updatePinDots();
-  if (state.pinInput.length === 4) {
-    setTimeout(submitPin, 200);
-  }
+  if (state.pinInput.length === 4) setTimeout(submitPin, 200);
 }
 
-function pinBack() {
-  state.pinInput = state.pinInput.slice(0, -1);
-  updatePinDots();
-}
-
-function pinCancel() {
-  state.pinInput = '';
-  state.selectedMember = null;
-  showLogin();
-}
-
+function pinBack() { state.pinInput = state.pinInput.slice(0,-1); updatePinDots(); }
+function pinCancel() { state.pinInput = ''; state.selectedMember = null; showLogin(); }
 function updatePinDots() {
-  const dots = document.querySelectorAll('.pin-dot');
-  dots.forEach((d, i) => {
-    d.classList.toggle('filled', i < state.pinInput.length);
-  });
+  document.querySelectorAll('.pin-dot').forEach((d, i) => d.classList.toggle('filled', i < state.pinInput.length));
 }
 
 async function submitPin() {
   showLoading();
-  const res = await callApi('memberLogin', {
-    accountId: state.selectedMember.accountId,
-    password: state.pinInput
-  });
-
-  if (res.ok) {
-    state.accountId = res.data.accountId;
-    state.role = res.data.role;
-    state.name = res.data.name;
-    state.nickname = res.data.nickname;
-    state.avatar = res.data.avatar;
-
-    // 儲存登入狀態
-    localStorage.setItem('familyMoney_session', JSON.stringify({
-      accountId: state.accountId,
-      role: state.role,
-      name: state.name,
-      nickname: state.nickname,
-      avatar: state.avatar
+  const r = await callApi('memberLogin', { accountId: state.selectedMember.accountId, password: state.pinInput });
+  if (r.ok) {
+    Object.assign(state, {
+      accountId: r.data.accountId, role: r.data.role,
+      name: r.data.name, nickname: r.data.nickname, avatar: r.data.avatar
+    });
+    localStorage.setItem('flq_session', JSON.stringify({
+      accountId: state.accountId, role: state.role,
+      name: state.name, nickname: state.nickname, avatar: state.avatar
     }));
-
-    if (res.data.needsPasswordChange) {
-      showToast('⚠️ 您使用預設密碼，建議至「設定」修改');
-    }
-
+    if (r.data.needsPasswordChange) showToast('⚠️ 建議至「設定」修改預設密碼');
     showMain();
   } else {
-    showToast('❌ ' + (res.error || '密碼錯誤'));
-    state.pinInput = '';
-    updatePinDots();
+    showToast('❌ ' + (r.error || '密碼錯誤'));
+    state.pinInput = ''; updatePinDots();
     showPinScreen();
   }
 }
 
 function logout() {
-  if (!confirm('確定要登出嗎？')) return;
-  localStorage.removeItem('familyMoney_session');
+  if (!confirm('確定登出？')) return;
+  localStorage.removeItem('flq_session');
   location.reload();
 }
 
-// ========================================================
-// 📡 API 呼叫
-// ========================================================
+// ===== API =====
 async function callApi(fn, params = {}) {
   try {
-    const url = CONFIG.GAS_URL + '?fn=' + fn
-      + '&params=' + encodeURIComponent(JSON.stringify(params));
-    const res = await fetch(url);
-    return await res.json();
-  } catch (e) {
-    return { ok: false, error: String(e) };
-  }
+    const url = CONFIG.GAS_URL + '?fn=' + fn + '&params=' + encodeURIComponent(JSON.stringify(params));
+    return await (await fetch(url)).json();
+  } catch (e) { return { ok: false, error: String(e) }; }
 }
 
-// ========================================================
-// 🎨 UI 控制
-// ========================================================
+// ===== UI =====
 function hideAll() {
-  ['loginScreen', 'pinScreen', 'mainScreen', 'loadingScreen'].forEach(id => {
-    document.getElementById(id).classList.add('hidden');
-  });
+  ['loginScreen','pinScreen','mainScreen','loadingScreen'].forEach(id => document.getElementById(id).classList.add('hidden'));
 }
-
 function showLoading() { hideAll(); document.getElementById('loadingScreen').classList.remove('hidden'); }
 function showLogin() { hideAll(); document.getElementById('loginScreen').classList.remove('hidden'); }
 function showPinScreen() { hideAll(); document.getElementById('pinScreen').classList.remove('hidden'); }
@@ -821,37 +622,30 @@ function showPinScreen() { hideAll(); document.getElementById('pinScreen').class
 function showMain() {
   hideAll();
   document.getElementById('mainScreen').classList.remove('hidden');
-
   document.getElementById('userAvatar').textContent = state.avatar || '👤';
   document.getElementById('userName').textContent = state.nickname || state.name;
   const badge = document.getElementById('userBadge');
   badge.textContent = state.role;
   badge.className = 'role-badge ' + (isParent() ? 'parent' : 'child');
 
-  document.querySelectorAll('.parent-only').forEach(el => {
-    el.style.display = isParent() ? '' : 'none';
-  });
-  document.querySelectorAll('.child-only').forEach(el => {
-    el.style.display = isChild() ? '' : 'none';
-  });
+  document.querySelectorAll('.parent-only').forEach(el => el.style.display = isParent() ? '' : 'none');
+  document.querySelectorAll('.child-only').forEach(el => el.style.display = isChild() ? '' : 'none');
 
   loadHome();
 }
 
 function isParent() { return state.role === '爸' || state.role === '媽'; }
 function isChild() { return state.role === '女兒'; }
-
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
-
 function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 
-// Tab 切換
+// Tabs
 document.querySelectorAll('.tab').forEach(t => {
   t.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
@@ -859,287 +653,420 @@ document.querySelectorAll('.tab').forEach(t => {
     const tab = t.dataset.tab;
     document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
     document.getElementById('tab-' + tab).classList.remove('hidden');
-
     if (tab === 'home') loadHome();
+    if (tab === 'record') loadRecordTab();
     if (tab === 'ledger') loadLedger();
-    if (tab === 'bonus') loadBonus();
+    if (tab === 'bonus') { loadBonus(); loadBonusTypes(); }
     if (tab === 'course') loadCourse();
-    if (tab === 'report') {
-      const m = new Date().toISOString().slice(0,7);
-      document.getElementById('reportMonth').value = m;
-      loadReport();
-    }
+    if (tab === 'report') { document.getElementById('reportMonth').value = new Date().toISOString().slice(0,7); loadReport(); }
     if (tab === 'setting') loadSettings();
   });
 });
 
-// ========================================================
-// 🏠 主頁
-// ========================================================
+// ===== Home =====
 async function loadHome() {
-  const balRes = await callApi('ledgerBalance', { accountId: state.accountId });
-  if (balRes.ok) {
-    document.getElementById('totalBalance').textContent = '$' + (balRes.data.total || 0);
-    document.getElementById('jarConsume').textContent = '$' + (balRes.data.consume || 0);
-    document.getElementById('jarGoal').textContent = '$' + (balRes.data.goal || 0);
-    document.getElementById('jarShare').textContent = '$' + (balRes.data.share || 0);
+  const b = await callApi('ledgerBalance', { accountId: state.accountId });
+  if (b.ok) {
+    document.getElementById('totalBalance').textContent = '$' + (b.data.total||0);
+    document.getElementById('jarConsume').textContent = '$' + (b.data.consume||0);
+    document.getElementById('jarGoal').textContent = '$' + (b.data.goal||0);
+    document.getElementById('jarShare').textContent = '$' + (b.data.share||0);
+  }
+  const l = await callApi('ledgerList', { accountId: state.accountId });
+  const c = document.getElementById('recentList');
+  if (l.ok && l.data.length > 0) c.innerHTML = l.data.slice(0,5).map(renderLedgerItem).join('');
+  else c.innerHTML = '<div class="empty">尚無紀錄</div>';
+
+  // 女兒：載入 XP + 任務
+  if (isChild()) {
+    loadXp();
+    loadTasks();
   }
 
-  const listRes = await callApi('ledgerList', { accountId: state.accountId });
-  const container = document.getElementById('recentList');
-  if (listRes.ok && listRes.data.length > 0) {
-    container.innerHTML = listRes.data.slice(0, 5).map(renderLedgerItem).join('');
+  // 家長：載入待審核
+  if (isParent()) loadPending();
+}
+
+async function loadXp() {
+  const r = await callApi('levelGet', { accountId: state.accountId });
+  if (!r.ok) return;
+  const d = r.data;
+  if (state.lastLevel !== null && d.level > state.lastLevel) {
+    document.getElementById('newLevel').textContent = 'Lv.' + d.level;
+    document.getElementById('levelupMask').classList.add('show');
+  }
+  state.lastLevel = d.level;
+  document.getElementById('xpLevel').textContent = 'Lv.' + d.level + ' ' + getLevelTitle(d.level);
+  document.getElementById('xpCurrent').textContent = d.currentXp;
+  document.getElementById('xpNext').textContent = d.nextLevelXp;
+  document.getElementById('xpFill').style.width = d.progress + '%';
+}
+
+function getLevelTitle(lvl) {
+  if (lvl >= 10) return '理財大師';
+  if (lvl >= 7) return '冒險專家';
+  if (lvl >= 4) return '勇者';
+  if (lvl >= 2) return '見習生';
+  return '新手';
+}
+
+async function loadTasks() {
+  const r = await callApi('taskTodayStatus', { accountId: state.accountId });
+  if (!r.ok) return;
+  document.getElementById('xpTasks').innerHTML = r.data.map(t =>
+    `<div class="xp-task ${t.done ? 'done' : ''}">
+      <span>${t.name}</span>
+      <span class="reward">${t.done ? '✓' : '+'+t.xp+' XP'}</span>
+    </div>`).join('');
+}
+
+async function loadPending() {
+  const r = await callApi('bonusList', { accountId: state.accountId, status: '待審核' });
+  const banner = document.getElementById('pendingBanner');
+  const items = document.getElementById('pendingItems');
+  if (r.ok && r.data.length > 0) {
+    banner.style.display = '';
+    items.innerHTML = r.data.slice(0,3).map(d => `<div class="item">• ${d['事項']} <strong>+$${d['金額']}</strong></div>`).join('') +
+      `<button class="btn btn-gold" style="margin-top:6px;font-size:11px;padding:5px 10px" onclick="document.querySelector('[data-tab=bonus]').click()">前往審核 →</button>`;
   } else {
-    container.innerHTML = '<div class="empty">尚無紀錄</div>';
+    banner.style.display = 'none';
   }
 }
 
 function renderLedgerItem(d) {
-  const isIncome = d['類型'] === '收入';
-  const sign = isIncome ? '+' : '-';
-  const cls = isIncome ? 'income' : 'expense';
+  const inc = d['類型'] === '收入';
   return `<div class="list-item">
     <div class="left">
-      <div class="title">${d['項目'] || '-'}</div>
-      <div class="meta">${formatDateShort(d['日期時間'])}</div>
+      <div class="title">${d['圖示']||''} ${d['說明']||d['分類名稱']||'-'}</div>
+      <div class="meta">${d['分類名稱']||''} · ${fmtDate(d['日期時間'])}</div>
     </div>
-    <div class="amount ${cls}">${sign}$${d['金額']}</div>
+    <div class="amount ${inc?'income':'expense'}">${inc?'+':'-'}$${d['金額']}</div>
   </div>`;
 }
 
-function formatDateShort(d) {
+function fmtDate(d) {
   if (!d) return '';
-  const date = new Date(d);
-  return (date.getMonth()+1) + '/' + date.getDate() + ' ' +
-    String(date.getHours()).padStart(2,'0') + ':' + String(date.getMinutes()).padStart(2,'0');
+  const x = new Date(d);
+  return (x.getMonth()+1)+'/'+x.getDate()+' '+String(x.getHours()).padStart(2,'0')+':'+String(x.getMinutes()).padStart(2,'0');
 }
 
-// ========================================================
-// 📒 帳本
-// ========================================================
+// ===== 記帳 Tab =====
+async function loadRecordTab() {
+  // 載入分類
+  const r = await callApi('categoryList', { accountId: state.accountId });
+  if (r.ok) {
+    state.categories = r.data;
+    renderCategoryGrid();
+  }
+  setRecordType(state.recordType);
+
+  // 家長：載入分類管理
+  if (isParent()) renderCategoryManage();
+}
+
+function setRecordType(type) {
+  state.recordType = type;
+  document.getElementById('typeIncome').style.opacity = type === 'income' ? 1 : 0.4;
+  document.getElementById('typeExpense').style.opacity = type === 'expense' ? 1 : 0.4;
+  renderCategoryGrid();
+}
+
+function renderCategoryGrid() {
+  const grid = document.getElementById('categoryGrid');
+  const filtered = state.categories.filter(c => c['類型'] === state.recordType);
+  grid.innerHTML = filtered.map(c =>
+    `<div class="cat-item" data-id="${c['分類ID']}" onclick="selectCategory('${c['分類ID']}','${c['名稱']}','${c['圖示']||''}')">
+      <span class="ico">${c['圖示']||'❓'}</span>${c['名稱']}
+    </div>`).join('');
+  state.recordCategoryId = null;
+}
+
+function selectCategory(id, name, icon) {
+  state.recordCategoryId = id;
+  state.recordCategoryName = name;
+  state.recordIcon = icon;
+  document.querySelectorAll('.cat-item').forEach(el => el.classList.toggle('selected', el.dataset.id === id));
+}
+
+async function submitRecord() {
+  if (!state.recordCategoryId) { showToast('請選擇分類'); return; }
+  const amount = parseInt(document.getElementById('recordAmount').value);
+  if (!amount || amount <= 0) { showToast('請輸入金額'); return; }
+  const desc = document.getElementById('recordDesc').value;
+  const type = state.recordType === 'income' ? '收入' : '支出';
+
+  const r = await callApi('ledgerAdd', {
+    accountId: state.accountId, type: type,
+    categoryId: state.recordCategoryId,
+    categoryName: state.recordCategoryName,
+    icon: state.recordIcon,
+    desc: desc || state.recordCategoryName,
+    amount: amount,
+    allocate: true,
+    from: document.getElementById('recordFrom').value
+  });
+  if (r.ok) {
+    showToast('✅ 已記錄');
+    document.getElementById('recordAmount').value = '';
+    document.getElementById('recordDesc').value = '';
+    if (isChild()) {
+      callApi('taskComplete', { accountId: state.accountId, taskKey: 'record_today', taskName: '今日記帳', xp: 30 });
+    }
+    setTimeout(loadHome, 500);
+  } else {
+    showToast('失敗：' + r.error);
+  }
+}
+
+// 分類管理
+function renderCategoryManage() {
+  const list = document.getElementById('categoryManageList');
+  if (!list) return;
+  list.innerHTML = state.categories.map(c =>
+    `<div class="list-item" style="cursor:pointer" onclick="editCategory('${c['分類ID']}')">
+      <div class="left">
+        <div class="title">${c['圖示']||''} ${c['名稱']}</div>
+        <div class="meta">${c['類型']==='income'?'💰 收入':'💸 支出'} · ${c['群組']||''}</div>
+      </div>
+    </div>`).join('');
+}
+
+function openCategoryEditor() {
+  document.getElementById('modalCategoryTitle').textContent = '🏷️ 新增分類';
+  ['catId','catName','catIcon','catGroup'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('catType').value = 'expense';
+  document.getElementById('catOrder').value = '99';
+  document.getElementById('btnDeleteCat').style.display = 'none';
+  openModal('modalCategory');
+}
+
+function editCategory(id) {
+  if (!isParent()) return;
+  const c = state.categories.find(x => x['分類ID'] === id);
+  if (!c) return;
+  document.getElementById('modalCategoryTitle').textContent = '📝 編輯分類';
+  document.getElementById('catId').value = c['分類ID'];
+  document.getElementById('catName').value = c['名稱'];
+  document.getElementById('catType').value = c['類型'];
+  document.getElementById('catIcon').value = c['圖示'] || '';
+  document.getElementById('catGroup').value = c['群組'] || '';
+  document.getElementById('catOrder').value = c['排序'] || 99;
+  document.getElementById('btnDeleteCat').style.display = '';
+  openModal('modalCategory');
+}
+
+async function submitCategory() {
+  const target = {
+    '分類ID': document.getElementById('catId').value,
+    '名稱': document.getElementById('catName').value,
+    '類型': document.getElementById('catType').value,
+    '圖示': document.getElementById('catIcon').value || '✨',
+    '群組': document.getElementById('catGroup').value,
+    '排序': parseInt(document.getElementById('catOrder').value) || 99,
+    '狀態': 'active'
+  };
+  if (!target['名稱']) { showToast('請填名稱'); return; }
+  const r = await callApi('categorySave', { accountId: state.accountId, target: target });
+  if (r.ok) { showToast('✅ 已儲存'); closeModal('modalCategory'); loadRecordTab(); }
+  else showToast('失敗：' + r.error);
+}
+
+async function deleteCategory() {
+  const id = document.getElementById('catId').value;
+  if (!confirm('確定刪除？已記錄的不受影響')) return;
+  const r = await callApi('categoryDelete', { accountId: state.accountId, id: id });
+  if (r.ok) { showToast('✅ 已刪除'); closeModal('modalCategory'); loadRecordTab(); }
+}
+
+// ===== 帳本 =====
 async function loadLedger() {
-  const res = await callApi('ledgerList', { accountId: state.accountId });
-  const container = document.getElementById('ledgerList');
-  if (res.ok && res.data.length > 0) {
-    container.innerHTML = res.data.map(renderLedgerItem).join('');
-  } else {
-    container.innerHTML = '<div class="empty">尚無紀錄</div>';
-  }
-}
-
-async function submitIncome() {
-  const item = document.getElementById('incomeItem').value;
-  const amount = parseInt(document.getElementById('incomeAmount').value);
-  const note = document.getElementById('incomeNote').value;
-  if (!item || !amount) { showToast('請填寫項目與金額'); return; }
-
-  const res = await callApi('ledgerAdd', {
-    accountId: state.accountId, type: '收入', item, amount, allocate: true, note
-  });
-  if (res.ok) {
-    showToast('✅ 已新增收入');
-    closeModal('modalIncome');
-    document.getElementById('incomeItem').value = '';
-    document.getElementById('incomeAmount').value = '';
-    document.getElementById('incomeNote').value = '';
-    loadHome();
-  } else {
-    showToast('失敗：' + res.error);
-  }
-}
-
-async function submitExpense() {
-  const item = document.getElementById('expenseItem').value;
-  const amount = parseInt(document.getElementById('expenseAmount').value);
-  const from = document.getElementById('expenseFrom').value;
-  const note = document.getElementById('expenseNote').value;
-  if (!item || !amount) { showToast('請填寫項目與金額'); return; }
-
-  const res = await callApi('ledgerAdd', {
-    accountId: state.accountId, type: '支出', item, amount, from, note
-  });
-  if (res.ok) {
-    showToast('✅ 已扣款');
-    closeModal('modalExpense');
-    document.getElementById('expenseItem').value = '';
-    document.getElementById('expenseAmount').value = '';
-    loadHome();
-  } else {
-    showToast('失敗：' + res.error);
-  }
+  document.getElementById('ledgerTabTitle').textContent = isParent() ? '📒 完整明細' : '📒 我的紀錄';
+  const r = await callApi('ledgerList', { accountId: state.accountId });
+  const c = document.getElementById('ledgerList');
+  if (r.ok && r.data.length > 0) c.innerHTML = r.data.map(renderLedgerItem).join('');
+  else c.innerHTML = '<div class="empty">'+(isParent()?'尚無紀錄':'還沒記任何帳～開始記吧！')+'</div>';
 }
 
 async function doMonthlyCharge() {
-  if (!confirm('確定要執行本月所有課程的女兒負擔扣款嗎？')) return;
-  const res = await callApi('courseMonthlyCharge', { accountId: state.accountId });
-  if (res.ok) {
-    showToast('✅ 已扣款 ' + (res.data.charged.length) + ' 筆');
-    loadHome();
-  } else {
-    showToast('失敗：' + res.error);
+  if (!confirm('執行本月課程女兒負擔扣款？')) return;
+  const r = await callApi('courseMonthlyCharge', { accountId: state.accountId });
+  if (r.ok) { showToast('✅ 已扣款 '+r.data.charged.length+' 筆'); loadHome(); }
+  else showToast('失敗：'+r.error);
+}
+
+// ===== 獎金 =====
+let bonusTypesCache = [];
+async function loadBonusTypes() {
+  const r = await callApi('bonusTypeList', { accountId: state.accountId });
+  if (!r.ok) return;
+  bonusTypesCache = r.data;
+  state.bonusTypes = r.data;
+  const sel = document.getElementById('bonusType');
+  sel.innerHTML = r.data.map(t =>
+    `<option value="${t['類型ID']}" data-amount="${t['建議金額']}" data-name="${t['名稱']}">${t['圖示']||'✨'} ${t['名稱']}${t['建議金額']>0?'（'+t['建議金額']+'元）':''}</option>`).join('');
+  if (isParent()) {
+    const list = document.getElementById('bonusTypeList');
+    list.innerHTML = r.data.map(t =>
+      `<div class="list-item" style="cursor:pointer" onclick="editBonusType('${t['類型ID']}')">
+        <div class="left"><div class="title">${t['圖示']||'✨'} ${t['名稱']}</div><div class="meta">建議 $${t['建議金額']||0} · 序 ${t['排序']||99}</div></div>
+        <div style="font-size:10px;color:var(--gold-deep)">編輯</div>
+      </div>`).join('');
   }
 }
 
-// ========================================================
-// 🏆 獎金
-// ========================================================
 async function loadBonus() {
-  const res = await callApi('bonusList', { accountId: state.accountId });
-  const container = document.getElementById('bonusList');
-  if (res.ok && res.data.length > 0) {
-    container.innerHTML = res.data.map(renderBonusItem).join('');
-  } else {
-    container.innerHTML = '<div class="empty">尚無申請紀錄</div>';
-  }
+  const r = await callApi('bonusList', { accountId: state.accountId });
+  const c = document.getElementById('bonusList');
+  if (r.ok && r.data.length > 0) c.innerHTML = r.data.map(renderBonusItem).join('');
+  else c.innerHTML = '<div class="empty">尚無紀錄</div>';
 }
 
 function renderBonusItem(d) {
-  const statusMap = {
-    '待審核': 'status-pending',
-    '已核准': 'status-approved',
-    '已拒絕': 'status-rejected'
-  };
-  const canReview = isParent() && d['審核狀態'] === '待審核';
-  const applicant = state.members.find(m => m.accountId === d['申請人']);
-  const applicantName = applicant ? (applicant.avatar + ' ' + (applicant.nickname || applicant.name)) : d['申請人'];
-
-  return `<div class="list-item" style="flex-direction:column;align-items:stretch;gap:6px">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="title">${d['事項'] || d['獎金類型']}</div>
-      <div class="amount" style="color:var(--gold-deep)">$${d['金額']}</div>
+  const sm = { '待審核':'status-pending','已核准':'status-approved','已拒絕':'status-rejected' };
+  const canR = isParent() && d['審核狀態'] === '待審核';
+  const ap = state.members.find(m => m.accountId === d['申請人']);
+  const apN = ap ? (ap.avatar+' '+(ap.nickname||ap.name)) : d['申請人'];
+  return `<div class="list-item" style="flex-direction:column;align-items:stretch;gap:5px">
+    <div style="display:flex;justify-content:space-between"><div class="title">${d['事項']||d['獎金類型']}</div><div class="amount" style="color:var(--gold-deep)">$${d['金額']}</div></div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--gold-deep)">
+      <span>${apN} · ${fmtDate(d['申請日期'])}</span>
+      <span class="status ${sm[d['審核狀態']]||''}">${d['審核狀態']}</span>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gold-deep)">
-      <span>${applicantName} · ${formatDateShort(d['申請日期'])}</span>
-      <span class="status ${statusMap[d['審核狀態']] || ''}">${d['審核狀態']}</span>
-    </div>
-    ${canReview ? `<div class="btn-row" style="margin-top:6px">
-      <button class="btn btn-red" onclick="reviewBonus('${d['申請ID']}','reject')">❌ 拒絕</button>
+    ${canR ? `<div class="btn-row" style="margin-top:5px">
+      <button class="btn btn-red" onclick="reviewBonus('${d['申請ID']}','reject')">❌ 拒</button>
       <button class="btn btn-green" onclick="reviewBonus('${d['申請ID']}','approve')">✅ 核准撥款</button>
     </div>` : ''}
   </div>`;
 }
 
+function openBonusApply() { loadBonusTypes().then(() => { suggestBonusAmount(); openModal('modalBonusApply'); }); }
 function suggestBonusAmount() {
-  const select = document.getElementById('bonusType');
-  const amount = select.options[select.selectedIndex].dataset.amount;
-  if (amount && amount !== '0') {
-    document.getElementById('bonusAmount').value = amount;
-  }
+  const sel = document.getElementById('bonusType');
+  if (!sel.selectedOptions[0]) return;
+  const a = sel.selectedOptions[0].dataset.amount;
+  document.getElementById('bonusAmount').value = (a && a !== '0') ? a : '';
 }
 
 async function submitBonus() {
-  const bonusType = document.getElementById('bonusType').value;
-  const event = document.getElementById('bonusEvent').value;
-  const amount = parseInt(document.getElementById('bonusAmount').value);
-  const proof = document.getElementById('bonusProof').value;
-
-  if (!event || !amount) { showToast('請填寫事項與金額'); return; }
-
-  const res = await callApi('bonusApply', {
-    accountId: state.accountId, bonusType, event, amount, proofUrl: proof
+  const sel = document.getElementById('bonusType');
+  const bt = sel.selectedOptions[0] ? sel.selectedOptions[0].dataset.name : '其他';
+  const evt = document.getElementById('bonusEvent').value;
+  const amt = parseInt(document.getElementById('bonusAmount').value);
+  if (!evt || !amt) { showToast('請填事項與金額'); return; }
+  const r = await callApi('bonusApply', {
+    accountId: state.accountId, bonusType: bt, event: evt, amount: amt,
+    proofUrl: document.getElementById('bonusProof').value
   });
-  if (res.ok) {
-    showToast('🎉 申請已遞交，等待家長審核');
+  if (r.ok) {
+    showToast('🎉 已遞交審核');
     closeModal('modalBonusApply');
     document.getElementById('bonusEvent').value = '';
     document.getElementById('bonusAmount').value = '';
     document.getElementById('bonusProof').value = '';
     loadBonus();
-  } else {
-    showToast('失敗：' + res.error);
-  }
+    if (isChild()) callApi('taskComplete', { accountId: state.accountId, taskKey: 'apply_bonus', taskName: '申請獎金', xp: 50 });
+  } else showToast('失敗：'+r.error);
 }
 
 async function reviewBonus(id, decision) {
-  const text = decision === 'approve' ? '核准並撥款' : '拒絕';
-  if (!confirm(`確定要${text}此申請嗎？`)) return;
-
-  const res = await callApi('bonusReview', {
-    accountId: state.accountId, id, decision
-  });
-  if (res.ok) {
-    showToast('✅ 已' + text);
-    loadBonus();
-  } else {
-    showToast('失敗：' + res.error);
-  }
+  const t = decision === 'approve' ? '核准並撥款' : '拒絕';
+  if (!confirm(`確定${t}？`)) return;
+  const r = await callApi('bonusReview', { accountId: state.accountId, id: id, decision: decision });
+  if (r.ok) { showToast('✅ 已'+t); loadBonus(); loadHome(); }
+  else showToast('失敗：'+r.error);
 }
 
-// ========================================================
-// 📚 課程
-// ========================================================
+function openBonusTypeEditor() {
+  document.getElementById('modalBonusTypeTitle').textContent = '🎖️ 新增';
+  ['btId','btName','btAmount'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('btIcon').value = '✨';
+  document.getElementById('btOrder').value = '99';
+  document.getElementById('btnDeleteBT').style.display = 'none';
+  openModal('modalBonusType');
+}
+
+function editBonusType(id) {
+  const t = bonusTypesCache.find(x => x['類型ID'] === id);
+  if (!t) return;
+  document.getElementById('modalBonusTypeTitle').textContent = '📝 編輯';
+  document.getElementById('btId').value = t['類型ID'];
+  document.getElementById('btName').value = t['名稱']||'';
+  document.getElementById('btIcon').value = t['圖示']||'✨';
+  document.getElementById('btAmount').value = t['建議金額']||'';
+  document.getElementById('btOrder').value = t['排序']||99;
+  document.getElementById('btnDeleteBT').style.display = '';
+  openModal('modalBonusType');
+}
+
+async function submitBonusType() {
+  const target = {
+    '類型ID': document.getElementById('btId').value,
+    '名稱': document.getElementById('btName').value,
+    '圖示': document.getElementById('btIcon').value || '✨',
+    '建議金額': parseInt(document.getElementById('btAmount').value) || 0,
+    '排序': parseInt(document.getElementById('btOrder').value) || 99,
+    '狀態': 'active'
+  };
+  if (!target['名稱']) { showToast('請填名稱'); return; }
+  const r = await callApi('bonusTypeSave', { accountId: state.accountId, target: target });
+  if (r.ok) { showToast('✅ 已儲存'); closeModal('modalBonusType'); loadBonusTypes(); }
+}
+
+async function deleteBonusType() {
+  const id = document.getElementById('btId').value;
+  if (!confirm('確定刪除？')) return;
+  const r = await callApi('bonusTypeDelete', { accountId: state.accountId, id: id });
+  if (r.ok) { showToast('✅ 已刪除'); closeModal('modalBonusType'); loadBonusTypes(); }
+}
+
+// ===== 課程 =====
 async function loadCourse() {
-  const res = await callApi('courseList', {});
-  const container = document.getElementById('courseList');
-  if (res.ok && res.data.length > 0) {
-    container.innerHTML = res.data.map(renderCourseItem).join('');
-  } else {
-    container.innerHTML = '<div class="empty">尚無課程</div>';
-  }
+  const r = await callApi('courseList', {});
+  const c = document.getElementById('courseList');
+  if (r.ok && r.data.length > 0) c.innerHTML = r.data.map(renderCourseItem).join('');
+  else c.innerHTML = '<div class="empty">尚無課程</div>';
 }
 
 function renderCourseItem(c) {
-  const catColor = {
-    '必修': '#a8332b',
-    '半自付': '#c9a14a',
-    '全自付': '#5a8a3a'
-  };
-  const fee = Number(c['月費']) || 0;
-  const childRatio = Number(c['女兒負擔比例']) || 0;
-  const childPay = Math.floor(fee * childRatio);
-  const isP = isParent();
-  return `<div class="list-item" style="flex-direction:column;align-items:stretch;gap:4px;cursor:${isP?'pointer':'default'}"
-    ${isP ? `onclick="editCourse('${c['課程ID']}')"` : ''}>
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="title">${c['課程名稱']}</div>
-      <span class="status" style="background:${catColor[c['分類']] || '#888'};color:white">${c['分類']}</span>
-    </div>
-    <div class="meta" style="font-size:12px;color:var(--gold-deep)">
-      月費 $${fee}　女兒負擔 $${childPay}（${Math.round(childRatio*100)}%）
-    </div>
+  const cc = { '必修':'#a8332b','半自付':'#c9a14a','全自付':'#5a8a3a','其他':'#888' };
+  const fee = Number(c['月費'])||0;
+  const cr = Number(c['女兒負擔比例'])||0;
+  const cp = Math.floor(fee*cr);
+  const ip = isParent();
+  return `<div class="list-item" style="flex-direction:column;align-items:stretch;gap:3px;cursor:${ip?'pointer':'default'}" ${ip?`onclick="editCourse('${c['課程ID']}')"`:''}>
+    <div style="display:flex;justify-content:space-between"><div class="title">${c['課程名稱']}</div><span class="status" style="background:${cc[c['分類']]||'#888'};color:white">${c['分類']}</span></div>
+    <div class="meta" style="font-size:11px">月費 $${fee}　女兒 $${cp} (${Math.round(cr*100)}%)</div>
   </div>`;
 }
 
-let editingCourse = null;
 function openCourseEditor() {
-  editingCourse = null;
   document.getElementById('modalCourseTitle').textContent = '📚 新增課程';
-  document.getElementById('courseId').value = '';
-  document.getElementById('courseName').value = '';
+  ['courseId','courseName','courseFee','courseNote'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('courseCategory').value = '必修';
-  document.getElementById('courseFee').value = '';
   document.getElementById('courseParentRatio').value = '1';
   document.getElementById('courseChildRatio').value = '0';
   document.getElementById('btnDeleteCourse').style.display = 'none';
   openModal('modalCourse');
 }
 
-function autoFillCourseRatio() {
-  const cat = document.getElementById('courseCategory').value;
-  const presets = {
-    '必修': [1, 0],
-    '半自付': [0.7, 0.3],
-    '全自付': [0, 1]
-  };
-  const [p, c] = presets[cat] || [1, 0];
+function applyRatio(p, c) {
   document.getElementById('courseParentRatio').value = p;
   document.getElementById('courseChildRatio').value = c;
 }
 
 async function editCourse(id) {
   if (!isParent()) return;
-  const res = await callApi('courseList', {});
-  if (!res.ok) return;
-  const c = res.data.find(x => x['課程ID'] === id);
+  const r = await callApi('courseList', {});
+  const c = r.data.find(x => x['課程ID'] === id);
   if (!c) return;
-  editingCourse = c;
-  document.getElementById('modalCourseTitle').textContent = '📝 編輯課程';
+  document.getElementById('modalCourseTitle').textContent = '📝 編輯';
   document.getElementById('courseId').value = c['課程ID'];
-  document.getElementById('courseName').value = c['課程名稱'];
-  document.getElementById('courseCategory').value = c['分類'] || '必修';
-  document.getElementById('courseFee').value = c['月費'] || '';
-  document.getElementById('courseParentRatio').value = c['家長負擔比例'] || '1';
-  document.getElementById('courseChildRatio').value = c['女兒負擔比例'] || '0';
+  document.getElementById('courseName').value = c['課程名稱']||'';
+  document.getElementById('courseCategory').value = c['分類']||'必修';
+  document.getElementById('courseFee').value = c['月費']||'';
+  document.getElementById('courseParentRatio').value = c['家長負擔比例']!==undefined ? c['家長負擔比例'] : '1';
+  document.getElementById('courseChildRatio').value = c['女兒負擔比例']!==undefined ? c['女兒負擔比例'] : '0';
+  document.getElementById('courseNote').value = c['備註']||'';
   document.getElementById('btnDeleteCourse').style.display = '';
   openModal('modalCourse');
 }
@@ -1149,111 +1076,68 @@ async function submitCourse() {
     '課程ID': document.getElementById('courseId').value,
     '課程名稱': document.getElementById('courseName').value,
     '分類': document.getElementById('courseCategory').value,
-    '月費': parseInt(document.getElementById('courseFee').value) || 0,
-    '家長負擔比例': parseFloat(document.getElementById('courseParentRatio').value) || 0,
-    '女兒負擔比例': parseFloat(document.getElementById('courseChildRatio').value) || 0,
+    '月費': parseInt(document.getElementById('courseFee').value)||0,
+    '家長負擔比例': parseFloat(document.getElementById('courseParentRatio').value)||0,
+    '女兒負擔比例': parseFloat(document.getElementById('courseChildRatio').value)||0,
+    '備註': document.getElementById('courseNote').value||'',
     '狀態': 'active'
   };
   if (!target['課程名稱']) { showToast('請填課程名稱'); return; }
-
-  const res = await callApi('courseSave', { accountId: state.accountId, target });
-  if (res.ok) {
-    showToast('✅ 已儲存');
-    closeModal('modalCourse');
-    loadCourse();
-  } else {
-    showToast('失敗：' + res.error);
-  }
+  const r = await callApi('courseSave', { accountId: state.accountId, target: target });
+  if (r.ok) { showToast('✅ 已儲存'); closeModal('modalCourse'); loadCourse(); }
 }
 
 async function deleteCourse() {
-  if (!editingCourse) return;
-  if (!confirm('確定刪除「' + editingCourse['課程名稱'] + '」？')) return;
-  const res = await callApi('courseDelete', {
-    accountId: state.accountId, id: editingCourse['課程ID']
-  });
-  if (res.ok) {
-    showToast('✅ 已刪除');
-    closeModal('modalCourse');
-    loadCourse();
-  }
+  const id = document.getElementById('courseId').value;
+  if (!confirm('確定刪除？')) return;
+  const r = await callApi('courseDelete', { accountId: state.accountId, id: id });
+  if (r.ok) { showToast('✅ 已刪除'); closeModal('modalCourse'); loadCourse(); }
 }
 
-// ========================================================
-// 📊 月報
-// ========================================================
+// ===== 月報 =====
 async function loadReport() {
-  const month = document.getElementById('reportMonth').value;
-  if (!month) return;
-  const res = await callApi('reportMonthly', { accountId: state.accountId, month });
-  const container = document.getElementById('reportContent');
-  if (res.ok) {
-    const r = res.data;
-    container.innerHTML = `
-      <div class="report-grid">
-        <div class="report-stat"><div class="label">總收入</div><div class="value" style="color:var(--green)">$${r['總收入']||0}</div></div>
-        <div class="report-stat"><div class="label">總支出</div><div class="value" style="color:var(--red-seal)">$${r['總支出']||0}</div></div>
-        <div class="report-stat"><div class="label">結餘</div><div class="value">$${r['結餘']||0}</div></div>
-        <div class="report-stat"><div class="label">獎金總額</div><div class="value" style="color:var(--gold-deep)">$${r['獎金總額']||0}</div></div>
-        <div class="report-stat"><div class="label">課程支出</div><div class="value">$${r['課程支出']||0}</div></div>
-        <div class="report-stat"><div class="label">交易筆數</div><div class="value">${r['交易筆數']||0}</div></div>
-      </div>
-      <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--gold-deep)">
-        ${month} 月度結算 · 自動計算
-      </div>
-    `;
-  } else {
-    container.innerHTML = '<div class="empty">無資料</div>';
-  }
+  const m = document.getElementById('reportMonth').value;
+  if (!m) return;
+  const r = await callApi('reportMonthly', { accountId: state.accountId, month: m });
+  const c = document.getElementById('reportContent');
+  if (r.ok) {
+    const d = r.data;
+    c.innerHTML = `<div class="report-grid">
+      <div class="report-stat"><div class="label">總收入</div><div class="value" style="color:var(--green)">$${d['總收入']||0}</div></div>
+      <div class="report-stat"><div class="label">總支出</div><div class="value" style="color:var(--red)">$${d['總支出']||0}</div></div>
+      <div class="report-stat"><div class="label">結餘</div><div class="value">$${d['結餘']||0}</div></div>
+      <div class="report-stat"><div class="label">獎金</div><div class="value" style="color:var(--gold-deep)">$${d['獎金總額']||0}</div></div>
+      <div class="report-stat"><div class="label">課程</div><div class="value">$${d['課程支出']||0}</div></div>
+      <div class="report-stat"><div class="label">生活</div><div class="value">$${d['生活支出']||0}</div></div>
+    </div>
+    <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--gold-deep)">${m} · ${d['交易筆數']||0} 筆交易</div>`;
+  } else c.innerHTML = '<div class="empty">無資料</div>';
 }
 
-// ========================================================
-// ⚙️ 設定
-// ========================================================
+// ===== 設定 =====
 async function loadSettings() {
   if (!isParent()) return;
-  const res = await callApi('settingGet', {});
-  const container = document.getElementById('settingList');
-  if (res.ok) {
-    container.innerHTML = res.data.map(s => `
-      <div class="list-item">
-        <div class="left">
-          <div class="title">${s['說明']}</div>
-          <div class="meta">${s['設定鍵']}</div>
-        </div>
-        <div class="amount">${s['設定值']}</div>
-      </div>
-    `).join('');
+  const r = await callApi('settingGet', {});
+  if (r.ok) {
+    document.getElementById('settingList').innerHTML = r.data.map(s =>
+      `<div class="list-item"><div class="left"><div class="title">${s['說明']}</div><div class="meta">${s['設定鍵']}</div></div><div class="amount">${s['設定值']}</div></div>`).join('');
   }
 }
 
 async function changePassword() {
-  const oldPwd = document.getElementById('oldPwd').value;
-  const newPwd = document.getElementById('newPwd').value;
-  const confirmPwd = document.getElementById('confirmPwd').value;
-
-  if (!/^\d{4}$/.test(newPwd)) { showToast('新密碼必須是 4 位數字'); return; }
-  if (newPwd !== confirmPwd) { showToast('兩次新密碼不一致'); return; }
-
-  const res = await callApi('memberChangePassword', {
-    accountId: state.accountId,
-    oldPassword: oldPwd,
-    newPassword: newPwd
-  });
-  if (res.ok) {
+  const o = document.getElementById('oldPwd').value;
+  const n = document.getElementById('newPwd').value;
+  const c = document.getElementById('confirmPwd').value;
+  if (!/^\d{4}$/.test(n)) { showToast('新密碼必須是 4 位數字'); return; }
+  if (n !== c) { showToast('兩次新密碼不一致'); return; }
+  const r = await callApi('memberChangePassword', { accountId: state.accountId, oldPassword: o, newPassword: n });
+  if (r.ok) {
     showToast('✅ 密碼已修改');
-    document.getElementById('oldPwd').value = '';
-    document.getElementById('newPwd').value = '';
-    document.getElementById('confirmPwd').value = '';
-  } else {
-    showToast('失敗：' + res.error);
-  }
+    ['oldPwd','newPwd','confirmPwd'].forEach(id => document.getElementById(id).value = '');
+  } else showToast('失敗：'+r.error);
 }
 
-// 啟動
 init();
-
 </script>
-
 </body>
 </html>
