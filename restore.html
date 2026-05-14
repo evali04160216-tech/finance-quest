@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔧 財務冒險者 - 資料還原工具</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif}
+body{background:linear-gradient(135deg,#0F0823 0%,#1a0d3e 100%);color:#F1EEFF;min-height:100vh;padding:20px}
+.wrap{max-width:480px;margin:0 auto}
+h1{font-size:22px;text-align:center;margin-bottom:6px;color:#A78BFA}
+.sub{text-align:center;font-size:12px;color:#888;margin-bottom:20px}
+.alert{background:#7F1D1D;border:1px solid #EF4444;border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;line-height:1.6}
+.alert b{color:#FCA5A5}
+.step{background:rgba(255,255,255,.05);border:1px solid #3D2F6A;border-radius:14px;padding:16px;margin-bottom:12px}
+.step.done{border-color:#10B981;background:rgba(16,185,129,.1)}
+.step-title{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;align-items:center}
+.step-num{display:inline-flex;background:#7C3AED;color:white;width:26px;height:26px;align-items:center;justify-content:center;border-radius:50%;font-weight:bold;margin-right:8px;font-size:13px}
+.step.done .step-num{background:#10B981}
+.step-body{font-size:13px;color:#A89CC8;line-height:1.7}
+button{width:100%;padding:13px;background:#7C3AED;color:white;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px}
+button:active{background:#6D28D9}
+button:disabled{background:#3D2F6A;opacity:.4;cursor:not-allowed}
+.btn-green{background:#10B981}
+.result{background:rgba(0,0,0,.4);border:1px solid #3D2F6A;border-radius:10px;padding:12px;margin-top:10px;font-size:12px;max-height:240px;overflow-y:auto}
+.result .ok{color:#10B981}
+.result .err{color:#EF4444}
+.result .info{color:#A78BFA}
+.result .item{padding:4px 0;border-bottom:1px solid #2D1F5A;font-family:monospace;font-size:11px}
+.big-success{display:none;background:linear-gradient(135deg,#064E3B,#10B981);border-radius:14px;padding:20px;text-align:center;margin-top:20px}
+.big-success.show{display:block}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.summary div{background:rgba(0,0,0,.3);padding:10px;border-radius:8px;text-align:center}
+.summary .label{font-size:11px;color:#888}
+.summary .value{font-size:18px;font-weight:bold}
+.summary .income{color:#10B981}
+.summary .expense{color:#EF4444}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🔧 冒險者資料還原</h1>
+<div class="sub">把雲端 33 筆舊資料倒回本裝置</div>
+<div class="alert">⚠️ <b>請在女兒平常使用冒險者的裝置上開這個頁面</b><br>不需要登入任何 Google 帳號</div>
+
+<div class="step" id="step1">
+<div class="step-title"><span class="step-num">1</span>從雲端讀取資料</div>
+<div class="step-body">
+<button onclick="fetchData()" id="btn1">📥 讀取雲端資料</button>
+<div id="result1" class="result" style="display:none"></div>
+</div>
+</div>
+
+<div class="step" id="step2">
+<div class="step-title"><span class="step-num">2</span>寫入本裝置</div>
+<div class="step-body">
+<button onclick="restoreData()" id="btn2" class="btn-green" disabled>💾 還原到本裝置</button>
+<div id="result2" class="result" style="display:none"></div>
+</div>
+</div>
+
+<div class="step" id="step3">
+<div class="step-title"><span class="step-num">3</span>驗證</div>
+<div class="step-body">
+<button onclick="openFQ()" id="btn3" disabled>🚀 開啟冒險者</button>
+</div>
+</div>
+
+<div class="big-success" id="bigSuccess">
+<h2>🎉 還原成功！</h2>
+<p>已寫入 <span id="count"></span> 筆資料</p>
+<p style="font-size:11px">請點「🚀 開啟冒險者」→ 用<b>家長 PIN</b> 登入 → 看「明細」</p>
+</div>
+</div>
+
+<script>
+const GAS_URL='https://script.google.com/macros/s/AKfycbzC1s2x58HzRlkYo_1E9Khqk1yXmgFHo7sSCC_asAnHn8bhzd7G74J1BYCAj979PfF9cQ/exec';
+const FQ_URL='https://evali04160216-tech.github.io/finance-quest-public/';
+let data=null;
+
+async function fetchData(){
+const btn=document.getElementById('btn1'),r=document.getElementById('result1');
+btn.disabled=true;btn.textContent='讀取中...';r.style.display='block';r.innerHTML='<div class="info">📡 連線中...</div>';
+try{
+const res=await fetch(GAS_URL+'?action=get');const d=await res.json();
+if(d.status==='ok'&&d.records){
+data=d;const recs=d.records;
+const inc=recs.filter(x=>x.type==='income').reduce((s,x)=>s+(x.amount||0),0);
+const exp=recs.filter(x=>x.type==='expense').reduce((s,x)=>s+(x.amount||0),0);
+r.innerHTML=`<div class="ok">✅ 成功讀取 ${recs.length} 筆</div>
+<div class="summary"><div><div class="label">收入</div><div class="value income">NT$${inc}</div></div>
+<div><div class="label">支出</div><div class="value expense">NT$${exp}</div></div></div>
+<div style="margin-top:10px;font-size:11px;color:#888">前 3 筆預覽：</div>
+${recs.slice(0,3).map(x=>`<div class="item">${x.date} ${x.type==='income'?'+':'-'}$${x.amount} ${x.cat} ${x.desc||''}</div>`).join('')}`;
+document.getElementById('step1').classList.add('done');
+document.getElementById('btn2').disabled=false;btn.textContent='✅ 完成讀取';
+}else{r.innerHTML='<div class="err">❌ 回應異常</div>';btn.disabled=false;btn.textContent='重試';}
+}catch(e){r.innerHTML='<div class="err">❌ '+e.message+'</div>';btn.disabled=false;btn.textContent='重試';}
+}
+
+function restoreData(){
+if(!data)return;
+if(!confirm(`即將寫入 ${data.records.length} 筆資料，確定嗎？`))return;
+const btn=document.getElementById('btn2'),r=document.getElementById('result2');
+btn.disabled=true;btn.textContent='寫入中...';r.style.display='block';
+try{
+localStorage.setItem('fq_records',JSON.stringify(data.records));
+localStorage.setItem('fq_budgets',JSON.stringify(data.budgets||{}));
+localStorage.setItem('fq_gas_url',GAS_URL);
+r.innerHTML=`<div class="ok">✅ 已寫入 fq_records（${data.records.length} 筆）</div>
+<div class="ok">✅ 已寫入 fq_budgets</div>
+<div class="ok">✅ 已綁定 GAS URL</div>`;
+document.getElementById('step2').classList.add('done');
+document.getElementById('btn3').disabled=false;
+document.getElementById('count').textContent=data.records.length;
+document.getElementById('bigSuccess').classList.add('show');
+btn.textContent='✅ 完成還原';
+}catch(e){r.innerHTML='<div class="err">❌ '+e.message+'</div>';btn.disabled=false;btn.textContent='重試';}
+}
+
+function openFQ(){window.open(FQ_URL,'_blank');document.getElementById('step3').classList.add('done');}
+</script>
+</body>
+</html>
